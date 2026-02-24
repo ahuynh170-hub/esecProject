@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earth in Crisis — Environmental Problems</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050f0a;
+    --surface: #091a10;
+    --surface2: #0d2418;
+    --border: rgba(0,255,140,0.12);
+    --text: #e0f5ea;
+    --muted: #6aaa80;
+    --green: #00e87a;
+    --teal: #00d4c8;
+    --blue: #0099ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    padding: 6rem 2rem 5rem;
+    text-align: center;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(0,232,122,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 20% 30%, rgba(0,153,255,0.12) 0%, transparent 60%),
+      var(--bg);
+  }
+  .hero::after {
+    content:'';
+    position:absolute; bottom:0; left:0; right:0; height:1px;
+    background: linear-gradient(90deg, transparent, var(--green), var(--teal), var(--blue), transparent);
+  }
+  .orb {
+    position:absolute; border-radius:50%; filter:blur(80px); opacity:.2;
+    animation: drift 14s ease-in-out infinite; pointer-events:none;
+  }
+  .orb1 { width:450px; height:450px; background:var(--green); top:-120px; left:-120px; }
+  .orb2 { width:320px; height:320px; background:var(--blue); bottom:-60px; right:-60px; animation-delay:-5s; }
+  .orb3 { width:220px; height:220px; background:var(--teal); top:40%; left:50%; transform:translate(-50%,-50%); animation-delay:-10s; }
+  @keyframes drift {
+    0%,100% { transform: translate(0,0); }
+    33%  { transform: translate(28px,-18px); }
+    66%  { transform: translate(-18px,28px); }
+  }
+
+  .hero-badge {
+    display:inline-flex; align-items:center; gap:.5rem;
+    font-family:'DM Sans', sans-serif; font-size:.7rem; letter-spacing:.25em; text-transform:uppercase;
+    color:var(--green); border:1px solid rgba(0,232,122,.3);
+    padding:.4rem 1.1rem; border-radius:100px; margin-bottom:2rem;
+    opacity:0; animation: fadeUp .7s ease .2s forwards;
+  }
+  .hero-badge::before {
+    content:''; width:6px; height:6px; border-radius:50%;
+    background:var(--green); box-shadow:0 0 8px var(--green);
+    animation: pulse 2s ease infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+
+  .hero h1 {
+    font-family:'Playfair Display', serif;
+    font-size: clamp(3.2rem, 9vw, 8.5rem);
+    font-weight:900; line-height:.92; margin-bottom:1.5rem;
+    opacity:0; animation: fadeUp .7s ease .4s forwards;
+  }
+  .hero h1 .grad {
+    background: linear-gradient(135deg, var(--green), var(--teal), var(--blue));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    font-style:italic;
+  }
+  .hero-sub {
+    max-width:520px; margin:0 auto 1rem; font-size:1rem; line-height:1.8; color:var(--muted);
+    opacity:0; animation: fadeUp .7s ease .6s forwards;
+  }
+
+  /* ─── TAB BAR ─── */
+  .tab-bar-wrap {
+    position:sticky; top:0; z-index:200;
+    background:rgba(5,15,10,.96); backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--border);
+    opacity:0; animation: fadeUp .6s ease .85s forwards;
+  }
+  .tab-bar {
+    display:flex; max-width:1200px; margin:0 auto;
+    overflow-x:auto; scrollbar-width:none; padding:0 1rem;
+  }
+  .tab-bar::-webkit-scrollbar { display:none; }
+  .tab-btn {
+    flex-shrink:0; padding:0; border:none; background:none; cursor:pointer;
+    color:var(--muted); border-bottom:2px solid transparent;
+    transition:all .25s; white-space:nowrap;
+    display:flex; flex-direction:column; align-items:center;
+  }
+  .tab-btn .tab-img-wrap {
+    width:80px; height:52px; overflow:hidden;
+    position:relative;
+  }
+  .tab-btn .tab-img-wrap img {
+    width:100%; height:100%; object-fit:cover;
+    filter: brightness(.45) saturate(.6);
+    transition: filter .3s;
+  }
+  .tab-btn:hover .tab-img-wrap img,
+  .tab-btn.active .tab-img-wrap img { filter: brightness(.75) saturate(1.1); }
+  .tab-btn .tab-label {
+    font-family:'DM Sans', sans-serif;
+    font-size:.68rem; font-weight:500; letter-spacing:.07em; text-transform:uppercase;
+    padding:.55rem .9rem;
+    border-bottom:2px solid transparent;
+    width:100%;
+    text-align:center;
+    margin-top:-2px;
+    transition: color .25s, border-color .25s;
+  }
+  .tab-btn:hover .tab-label { color:var(--text); }
+  .tab-btn.active .tab-label {
+    color:var(--text);
+    border-bottom-color: var(--tab-color, var(--green));
+  }
+
+  /* ─── CONTENT ─── */
+  .content-area {
+    max-width:1200px; margin:0 auto; padding:3rem 2rem 5rem;
+  }
+  .tab-panel { display:none; }
+  .tab-panel.active { display:block; animation: panelIn .4s ease forwards; }
+  @keyframes panelIn {
+    from { opacity:0; transform:translateY(14px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  /* Hero image strip per panel */
+  .panel-hero-img {
+    width:100%; height:280px; border-radius:20px; overflow:hidden;
+    margin-bottom:2.5rem; position:relative;
+  }
+  .panel-hero-img img {
+    width:100%; height:100%; object-fit:cover;
+    filter:brightness(.6) saturate(1.1);
+    transition: transform 8s ease;
+  }
+  .panel-hero-img:hover img { transform: scale(1.04); }
+  .panel-hero-img .img-overlay {
+    position:absolute; inset:0;
+    background: linear-gradient(to right, rgba(5,15,10,.85) 0%, transparent 60%);
+    display:flex; flex-direction:column; justify-content:flex-end; padding:2rem 2.5rem;
+  }
+
+  .panel-num {
+    font-family:'DM Sans', sans-serif;
+    font-size:.7rem; font-weight:500; letter-spacing:.3em; text-transform:uppercase; margin-bottom:.6rem;
+  }
+  .panel-title {
+    font-family:'Playfair Display', serif;
+    font-size:clamp(2rem, 4.5vw, 3.8rem); font-weight:900; line-height:1;
+  }
+  .panel-stat-inline {
+    margin-top:.8rem;
+    font-family:'Playfair Display', serif;
+    font-size:1.6rem; font-weight:700; font-style:italic;
+    opacity:.85;
+  }
+  .panel-stat-inline span {
+    font-family:'DM Sans', sans-serif; font-size:.75rem; font-weight:300;
+    font-style:normal; display:block; opacity:.7; margin-top:.15rem; letter-spacing:.05em;
+  }
+
+  /* CARDS */
+  .cards-grid {
+    display:grid; grid-template-columns:repeat(2,1fr); gap:1.5rem;
+  }
+  .card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:20px; padding:2rem;
+    position:relative; overflow:hidden;
+    transition: transform .22s, box-shadow .22s, border-color .22s;
+  }
+  .card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:2px;
+    background:linear-gradient(90deg, var(--card-color, var(--green)), transparent);
+    opacity:0; transition:opacity .3s;
+  }
+  .card:hover { transform:translateY(-4px); box-shadow:0 20px 60px rgba(0,0,0,.5); border-color:rgba(0,232,122,.2); }
+  .card:hover::before { opacity:1; }
+  .card::after {
+    content:''; position:absolute; bottom:-30px; right:-30px;
+    width:100px; height:100px; border-radius:50%;
+    background:var(--card-color, var(--green)); opacity:0; filter:blur(40px);
+    transition:opacity .4s; pointer-events:none;
+  }
+  .card:hover::after { opacity:.08; }
+
+  .card-tag {
+    font-family:'DM Sans', sans-serif;
+    font-size:.65rem; font-weight:500; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--card-color, var(--green)); margin-bottom:.7rem; display:block;
+  }
+  .card h3 {
+    font-family:'Playfair Display', serif;
+    font-size:1.25rem; font-weight:700; margin-bottom:.9rem; color:var(--text);
+  }
+  .card p {
+    font-size:.88rem; line-height:1.82; color:var(--muted);
+  }
+
+  /* Per-panel colour theming */
+  [data-panel="1"] .panel-num,
+  [data-panel="1"] .panel-stat-inline { color:#00e87a; }
+  [data-panel="2"] .panel-num,
+  [data-panel="2"] .panel-stat-inline { color:#a8ff3e; }
+  [data-panel="3"] .panel-num,
+  [data-panel="3"] .panel-stat-inline { color:#00c8ff; }
+  [data-panel="4"] .panel-num,
+  [data-panel="4"] .panel-stat-inline { color:#00d4c8; }
+  [data-panel="5"] .panel-num,
+  [data-panel="5"] .panel-stat-inline { color:#38b8ff; }
+
+  [data-panel="1"] .card { --card-color:#00e87a; }
+  [data-panel="2"] .card { --card-color:#a8ff3e; }
+  [data-panel="3"] .card { --card-color:#00c8ff; }
+  [data-panel="4"] .card { --card-color:#00d4c8; }
+  [data-panel="5"] .card { --card-color:#38b8ff; }
+
+  /* ─── QUIZ ─── */
+  .quiz-section {
+    max-width:860px; margin:0 auto; padding:4rem 2rem 6rem;
+    border-top:1px solid var(--border);
+  }
+  .quiz-header { text-align:center; margin-bottom:3rem; }
+  .quiz-header .eyebrow {
+    font-family:'DM Sans', sans-serif;
+    font-size:.7rem; letter-spacing:.3em; text-transform:uppercase;
+    color:var(--green); margin-bottom:.8rem; display:block;
+  }
+  .quiz-header h2 {
+    font-family:'Playfair Display', serif;
+    font-size:clamp(2rem, 4vw, 3rem); font-weight:900;
+    line-height:1.1; margin-bottom:.8rem;
+  }
+  .quiz-header h2 em { font-style:italic; color:var(--teal); }
+  .quiz-header p {
+    font-size:.92rem; color:var(--muted); line-height:1.7;
+  }
+
+  .question-block {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:20px; padding:2rem; margin-bottom:1.5rem;
+    transition: border-color .2s;
+  }
+  .question-block:hover { border-color: rgba(0,255,140,.2); }
+
+  .q-num {
+    font-family:'DM Sans', sans-serif;
+    font-size:.65rem; font-weight:500; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--green); margin-bottom:.7rem; display:block;
+  }
+  .q-text {
+    font-family:'Playfair Display', serif;
+    font-size:1.1rem; font-weight:700; margin-bottom:1.4rem; line-height:1.4;
+  }
+  .options { display:grid; gap:.7rem; }
+  .option-label {
+    display:flex; align-items:center; gap:.9rem;
+    padding:.85rem 1.1rem; border-radius:12px;
+    border:1px solid rgba(255,255,255,.07);
+    cursor:pointer; transition: all .2s;
+    font-size:.88rem; color:var(--muted); line-height:1.4;
+  }
+  .option-label:hover { border-color:rgba(0,232,122,.3); color:var(--text); background:rgba(0,232,122,.04); }
+  .option-label input { display:none; }
+  .option-radio {
+    width:18px; height:18px; border-radius:50%;
+    border:2px solid rgba(255,255,255,.2); flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    transition: border-color .2s;
+  }
+  .option-radio::after {
+    content:''; width:8px; height:8px; border-radius:50%;
+    background:var(--green); opacity:0; transition:opacity .2s, transform .2s; transform:scale(.4);
+  }
+  .option-label:has(input:checked) {
+    border-color:var(--green); color:var(--text); background:rgba(0,232,122,.06);
+  }
+  .option-label:has(input:checked) .option-radio { border-color:var(--green); }
+  .option-label:has(input:checked) .option-radio::after { opacity:1; transform:scale(1); }
+
+  /* Answer reveal */
+  .option-label.correct-reveal {
+    border-color:#00e87a !important; background:rgba(0,232,122,.1) !important; color:var(--text) !important;
+  }
+  .option-label.wrong-reveal {
+    border-color:#ff4d4d !important; background:rgba(255,77,77,.07) !important; color:#ff9999 !important;
+  }
+
+  .quiz-finish-wrap { text-align:center; margin-top:2.5rem; }
+  .finish-btn {
+    font-family:'DM Sans', sans-serif; font-size:.9rem; font-weight:500;
+    letter-spacing:.1em; text-transform:uppercase;
+    padding:1rem 3rem; border-radius:100px; border:none; cursor:pointer;
+    background: linear-gradient(135deg, var(--green), var(--teal));
+    color:#050f0a; transition: transform .2s, box-shadow .2s, opacity .2s;
+    box-shadow: 0 0 30px rgba(0,232,122,.3);
+  }
+  .finish-btn:hover { transform:translateY(-2px); box-shadow:0 8px 40px rgba(0,232,122,.4); }
+  .finish-btn:active { transform:translateY(0); }
+
+  /* ─── MODAL ─── */
+  .modal-backdrop {
+    display:none; position:fixed; inset:0; z-index:1000;
+    background:rgba(0,0,0,.75); backdrop-filter:blur(8px);
+    align-items:center; justify-content:center; padding:2rem;
+  }
+  .modal-backdrop.show { display:flex; }
+  .modal {
+    background:var(--surface2); border:1px solid var(--border);
+    border-radius:24px; padding:3rem 2.5rem; max-width:480px; width:100%;
+    text-align:center; position:relative;
+    animation: modalPop .5s cubic-bezier(.175,.885,.32,1.275) forwards;
+  }
+  @keyframes modalPop {
+    from { opacity:0; transform:scale(.85) translateY(20px); }
+    to   { opacity:1; transform:scale(1) translateY(0); }
+  }
+  .modal-badge {
+    font-size:4rem; margin-bottom:1.5rem; display:block;
+    animation: bounce 1s ease .3s;
+  }
+  @keyframes bounce {
+    0%,100% { transform:translateY(0); }
+    40% { transform:translateY(-18px); }
+    60% { transform:translateY(-8px); }
+  }
+  .modal h3 {
+    font-family:'Playfair Display', serif;
+    font-size:1.9rem; font-weight:900; margin-bottom:.6rem;
+  }
+  .modal .score-display {
+    font-family:'Playfair Display', serif;
+    font-size:3.5rem; font-weight:900; font-style:italic;
+    background:linear-gradient(135deg, var(--green), var(--teal));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    line-height:1; margin:1rem 0;
+  }
+  .modal .score-label {
+    font-size:.8rem; color:var(--muted); letter-spacing:.1em; text-transform:uppercase;
+  }
+  .modal .modal-msg {
+    font-size:.92rem; color:var(--muted); line-height:1.7; margin:1.2rem 0 2rem;
+  }
+  .modal-close {
+    font-family:'DM Sans', sans-serif; font-size:.85rem; font-weight:500;
+    letter-spacing:.1em; text-transform:uppercase;
+    padding:.8rem 2.5rem; border-radius:100px; border:1px solid var(--border);
+    background:transparent; color:var(--text); cursor:pointer;
+    transition: background .2s, border-color .2s;
+  }
+  .modal-close:hover { background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.2); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align:center; padding:3rem 2rem 4rem;
+    border-top:1px solid var(--border);
+  }
+  .footer-inner { max-width:500px; margin:0 auto; }
+  footer h4 {
+    font-family:'Playfair Display', serif;
+    font-size:1.5rem; font-weight:900; font-style:italic;
+    background:linear-gradient(135deg, var(--green), var(--teal), var(--blue));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    margin-bottom:.75rem;
+  }
+  footer p { color:var(--muted); font-size:.9rem; line-height:1.75; }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(16px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  @media (max-width:700px) {
+    .cards-grid { grid-template-columns:1fr; }
+    .panel-hero-img { height:200px; }
+    .tab-btn .tab-img-wrap { width:60px; height:40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="hero-badge">A Planetary Crisis Report</div>
+  <h1>Our <span class="grad">Planet</span><br>is Hurting</h1>
+  <p class="hero-sub">Five critical environmental crises threatening Earth — explore each one: the current situation, root causes, consequences, and real solutions.</p>
+</section>
+
+<!-- TAB BAR -->
+<div class="tab-bar-wrap">
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="1" onclick="switchTab(1)" style="--tab-color:#00e87a">
+      <div class="tab-img-wrap">
+        <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=200&q=70" alt="Climate Change">
+      </div>
+      <span class="tab-label">Climate Change</span>
+    </button>
+    <button class="tab-btn" data-tab="2" onclick="switchTab(2)" style="--tab-color:#a8ff3e">
+      <div class="tab-img-wrap">
+        <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=200&q=70" alt="Deforestation">
+      </div>
+      <span class="tab-label">Deforestation</span>
+    </button>
+    <button class="tab-btn" data-tab="3" onclick="switchTab(3)" style="--tab-color:#00c8ff">
+      <div class="tab-img-wrap">
+        <img src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=200&q=70" alt="Ocean Pollution">
+      </div>
+      <span class="tab-label">Ocean Pollution</span>
+    </button>
+    <button class="tab-btn" data-tab="4" onclick="switchTab(4)" style="--tab-color:#00d4c8">
+      <div class="tab-img-wrap">
+        <img src="https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=200&q=70" alt="Biodiversity Loss">
+      </div>
+      <span class="tab-label">Biodiversity Loss</span>
+    </button>
+    <button class="tab-btn" data-tab="5" onclick="switchTab(5)" style="--tab-color:#38b8ff">
+      <div class="tab-img-wrap">
+        <img src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=200&q=70" alt="Air Pollution">
+      </div>
+      <span class="tab-label">Air Pollution</span>
+    </button>
+  </div>
+</div>
+
+<!-- CONTENT AREA -->
+<div class="content-area">
+
+  <!-- PANEL 1: CLIMATE CHANGE -->
+  <div class="tab-panel active" id="panel-1" data-panel="1">
+    <div class="panel-hero-img">
+      <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&q=80" alt="Wildfire representing climate change">
+      <div class="img-overlay">
+        <p class="panel-num">Problem 01 / 05</p>
+        <h2 class="panel-title">Climate Change</h2>
+        <div class="panel-stat-inline">1.2°C above pre-industrial<span>avg. global temperature rise since pre-industrial times</span></div>
+      </div>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <span class="card-tag">Current Situation</span>
+        <h3>A Warming World</h3>
+        <p>The Earth's average temperature has risen by approximately 1.2°C since pre-industrial times. The last decade was the hottest on record, with 2023 being the hottest single year ever measured. Arctic sea ice is declining at 13% per decade, and sea levels are rising at 3.6 mm per year. Extreme weather events are becoming more frequent and intense across every continent.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Root Causes</span>
+        <h3>Fossil Fuels & Emissions</h3>
+        <p>Burning coal, oil, and natural gas releases CO₂ and other greenhouse gases that trap heat in the atmosphere. Deforestation, industrial agriculture, cement production, and industrial processes contribute to the 37+ billion tonnes of CO₂ emitted globally each year. Transportation and energy production are the two largest sectoral sources worldwide.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Consequences</span>
+        <h3>Cascading Disasters</h3>
+        <p>More frequent and severe hurricanes, wildfires, droughts, and floods devastate communities globally. Glaciers and ice sheets are melting, threatening water supplies for billions. Entire island nations face submersion from rising seas. Crop failures and heat stress will displace hundreds of millions, intensifying global inequality and triggering unprecedented climate migration.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Solutions</span>
+        <h3>The Path to Net Zero</h3>
+        <p>Rapid transition to renewable energy — solar, wind, and hydro — while phasing out fossil fuels. Improving energy efficiency, electrifying transportation, protecting and restoring forests, and developing carbon capture technologies. Updating international climate agreements with enforceable targets and financing clean energy transitions in developing nations.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL 2: DEFORESTATION -->
+  <div class="tab-panel" id="panel-2" data-panel="2">
+    <div class="panel-hero-img">
+      <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=1200&q=80" alt="Dense forest canopy">
+      <div class="img-overlay">
+        <p class="panel-num">Problem 02 / 05</p>
+        <h2 class="panel-title">Deforestation</h2>
+        <div class="panel-stat-inline">10 million hectares lost<span>area of forest cleared every single year worldwide</span></div>
+      </div>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <span class="card-tag">Current Situation</span>
+        <h3>Forests Under Siege</h3>
+        <p>An area of forest the size of Portugal is lost each year. The Amazon has already lost nearly 20% of its original cover and is approaching a tipping point beyond which it could transform into savannah permanently. Tropical forests — home to half of all land species — are disappearing fastest in Brazil, Indonesia, and the Congo Basin.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Root Causes</span>
+        <h3>Agriculture & Industry</h3>
+        <p>Agricultural expansion — cattle ranching, soy farming, and palm oil plantations — drives over 70% of tropical deforestation. Logging for timber and paper, mining, and infrastructure like roads and dams clear vast swaths yearly. Weak governance and corruption allow illegal clearing to continue unchecked despite international commitments to protect forests.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Consequences</span>
+        <h3>Ecological Collapse</h3>
+        <p>Forests regulate climate by absorbing CO₂ and controlling rainfall patterns. Their loss accelerates climate change and triggers regional droughts. Soil erosion, flooding, and loss of medicinal plants follow. Indigenous communities lose their ancestral homes. Over 80% of terrestrial biodiversity depends on forests, making deforestation a primary extinction driver.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Solutions</span>
+        <h3>Protect, Restore, Transform</h3>
+        <p>Expanding protected areas and empowering indigenous land stewards who have the best track record in forest conservation. Ending commodity-driven deforestation through supply chain regulations and sustainable certification. REDD+ payments reward developing nations for conservation. Large-scale reforestation and shifting diets toward less land-intensive foods reduce pressure.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL 3: OCEAN POLLUTION -->
+  <div class="tab-panel" id="panel-3" data-panel="3">
+    <div class="panel-hero-img">
+      <img src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=1200&q=80" alt="Ocean plastic pollution">
+      <div class="img-overlay">
+        <p class="panel-num">Problem 03 / 05</p>
+        <h2 class="panel-title">Ocean Pollution</h2>
+        <div class="panel-stat-inline">11 million tonnes of plastic<span>enters the world's oceans every single year</span></div>
+      </div>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <span class="card-tag">Current Situation</span>
+        <h3>Seas of Plastic & Toxins</h3>
+        <p>The ocean absorbs 30% of global CO₂ and 90% of excess heat — yet it's under catastrophic stress. Over 5 trillion pieces of plastic float on the surface, forming vast garbage patches in ocean gyres. Dead zones — oxygen-depleted areas where marine life cannot survive — now number over 500 worldwide, covering more than 245,000 km².</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Root Causes</span>
+        <h3>Waste, Runoff & Industry</h3>
+        <p>Single-use plastics, poorly managed landfills, and coastal dumping are the primary plastic sources. Agricultural fertilizer runoff causes algal blooms that create hypoxic dead zones. Industrial chemicals, pharmaceutical waste, heavy metals, and oil spills contaminate marine ecosystems. Noise pollution from massive shipping vessels disrupts whale communication and navigation.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Consequences</span>
+        <h3>Marine Ecosystem Collapse</h3>
+        <p>Sea turtles, seabirds, dolphins, and whales die from plastic ingestion and entanglement. Microplastics now permeate the entire food chain, including seafood consumed by billions of humans. Ocean acidification from CO₂ absorption dissolves coral reefs and shellfish shells. Coral bleaching has affected over 50% of the Great Barrier Reef.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Solutions</span>
+        <h3>Clean & Protect</h3>
+        <p>Global plastic reduction treaties with binding, enforceable targets. Redesigning packaging to be reusable or biodegradable by design. Improving waste management infrastructure in developing nations. Ocean cleanup technologies to remove existing debris. Reducing agricultural fertilizer runoff through precision farming. Expanding Marine Protected Areas to cover 30% of the ocean by 2030.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL 4: BIODIVERSITY LOSS -->
+  <div class="tab-panel" id="panel-4" data-panel="4">
+    <div class="panel-hero-img">
+      <img src="https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=1200&q=80" alt="Wildlife - fox in nature">
+      <div class="img-overlay">
+        <p class="panel-num">Problem 04 / 05</p>
+        <h2 class="panel-title">Biodiversity Loss</h2>
+        <div class="panel-stat-inline">69% decline in wildlife<span>average population reduction since 1970</span></div>
+      </div>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <span class="card-tag">Current Situation</span>
+        <h3>The Sixth Mass Extinction</h3>
+        <p>Scientists warn we are in the sixth mass extinction — the first driven by a single species. Wildlife populations have declined 69% on average since 1970. One million species are currently threatened with extinction. Species are disappearing up to 1,000 times the natural background rate. We are losing biodiversity faster than science can even document it.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Root Causes</span>
+        <h3>Habitat, Hunting & Climate</h3>
+        <p>Habitat destruction from agriculture, urbanization, and deforestation is the leading driver. Overexploitation through hunting, fishing, and the illegal wildlife trade pushes species toward collapse. Invasive species introduced by humans outcompete native fauna. Pollution disrupts reproduction and immunity. Climate change shifts ecosystems faster than most species can migrate or adapt.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Consequences</span>
+        <h3>Unraveling Ecosystems</h3>
+        <p>Every extinction removes a node from the web of life, risking cascading collapse. Pollinators like bees support one-third of global food production — their decline directly threatens food security. Loss of predators destabilizes entire food chains. Fewer species means fewer medicines, less resilient agriculture, and diminished ecosystem services valued at trillions annually.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Solutions</span>
+        <h3>Rewild & Restore</h3>
+        <p>The 30x30 target — protecting 30% of land and ocean by 2030 — is a critical first step. Habitat connectivity corridors allow species to migrate safely. Rewilding — reintroducing apex predators and keystone species — revitalizes entire ecosystems. Ending wildlife trafficking through stronger enforcement. Reforming agricultural subsidies to reward biodiversity-friendly farming practices.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL 5: AIR POLLUTION -->
+  <div class="tab-panel" id="panel-5" data-panel="5">
+    <div class="panel-hero-img">
+      <img src="https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=1200&q=80" alt="Factory air pollution smokestacks">
+      <div class="img-overlay">
+        <p class="panel-num">Problem 05 / 05</p>
+        <h2 class="panel-title">Air Pollution</h2>
+        <div class="panel-stat-inline">7 million premature deaths<span>killed by dirty air every year worldwide</span></div>
+      </div>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <span class="card-tag">Current Situation</span>
+        <h3>The Invisible Killer</h3>
+        <p>99% of the world's population breathes air that exceeds WHO safety guidelines. Air pollution kills approximately 7 million people prematurely each year — more than AIDS, tuberculosis, and malaria combined. South Asia and Sub-Saharan Africa bear the heaviest burden. Particulate matter (PM2.5) and nitrogen dioxide are among the most lethal pollutants worldwide.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Root Causes</span>
+        <h3>Combustion & Industry</h3>
+        <p>Burning fossil fuels for power, transport, and industry generates the majority of harmful emissions. Open burning of crops and biomass — still common in low-income nations for cooking and heating — releases massive amounts of toxic smoke. Vehicle exhaust, chemical manufacturing, construction dust, and wildfires intensified by climate change all contribute to degraded air quality.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Consequences</span>
+        <h3>Health & Environment</h3>
+        <p>Air pollution causes lung cancer, stroke, heart disease, respiratory infections, and COPD. Children exposed to polluted air suffer reduced cognitive development and lifelong health impacts. Acid rain from sulfur and nitrogen emissions devastates forests and acidifies lakes. Ground-level ozone damages crops globally. Economic losses from healthcare costs exceed $8 trillion annually.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Solutions</span>
+        <h3>Clean Air for All</h3>
+        <p>Transitioning to renewable electricity and electric vehicles eliminates the largest sources of pollution. Promoting clean cookstoves and fuels in developing nations could save millions of lives per decade. Stricter industrial emission standards with real-time monitoring and enforcement. Urban tree canopy programs filter particulates. International air quality frameworks enable cross-border cooperation and accountability.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /content-area -->
+
+<!-- ─── QUIZ ─── -->
+<section class="quiz-section" id="quiz">
+  <div class="quiz-header">
+    <span class="eyebrow">Test Your Knowledge</span>
+    <h2>How Well Do You Know<br><em>Our Planet?</em></h2>
+    <p>Answer all 10 questions based on what you've just read, then click Finish to see your score.</p>
+  </div>
+
+  <form id="quizForm">
+
+    <div class="question-block">
+      <span class="q-num">Question 01</span>
+      <p class="q-text">By how much has the Earth's average temperature risen above pre-industrial levels?</p>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q1" value="a"><span class="option-radio"></span>0.5°C</label>
+        <label class="option-label"><input type="radio" name="q1" value="b"><span class="option-radio"></span>1.2°C</label>
+        <label class="option-label"><input type="radio" name="q1" value="c"><span class="option-radio"></span>2.0°C</label>
+        <label class="option-label"><input type="radio" name="q1" value="d"><span class="option-radio"></span>3.5°C</label>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <span class="q-num">Question 02</span>
+      <p class="q-text">How many billions of tonnes of CO₂ are emitted globally each year?</p>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q2" value="a"><span class="option-radio"></span>10+ billion tonnes</label>
+        <label class="option-label"><input type="radio" name="q2" value="b"><span class="option-radio"></span>20+ billion tonnes</label>
+        <label class="option-label"><input type="radio" name="q2" value="c"><span class="option-radio"></span>37+ billion tonnes</label>
+        <label class="option-label"><input type="radio" name="q2" value="d"><span class="option-radio"></span>50+ billion tonnes</label>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <span class="q-num">Question 03</span>
+      <p class="q-text">Approximately how many hectares of forest are lost worldwide every year?</p>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q3" value="a"><span class="option-radio"></span>1 million hectares</label>
+        <label class="option-label"><input type="radio" name="q3" value="b"><span class="option-radio"></span>5 million hectares</label>
+        <label class="option-label"><input type="radio" name="q3" value="c"><span class="option-radio"></span>10 million hectares</label>
+        <label class="option-label"><input type="radio" name="q3" value="d"><span class="option-radio"></span>25 million hectares</label>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <span class="q-num">Question 04</span>
+      <p class="q-text">What percentage of tropical deforestation is driven by agricultural expansion?</p>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q4" value="a"><span class="option-radio"></span>Over 30%</label>
+        <label class="option-label"><input type="radio" name="q4" value="b"><span class="option-radio"></span>Over 50%</label>
+        <label class="option-label"><input type="radio" name="q4" value="c"><span class="option-radio"></span>Over 70%</label>
+        <label class="option-label"><input type="radio" name="q4" value="d"><span class="option-radio"></span>Over 90%</label>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <span class="q-num">Question 05</span>
+      <p class="q-text">How many million tonnes of plastic enter the world's oceans every year?</p>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q5" value="a"><span class="option-radio"></span>2 million tonnes</label>
+        <label class="option-label"><input type="radio" name="q5" value="b"><span class="option-radio"></span>11 million tonnes</label>
+        <label class="option-label"><input type="radio" name="q5" value="c"><span class="option-radio"></span>25 million tonnes</label>
+        <label class="option-label"><input type="radio" name="q5" value="d"><span class="option-radio"></span>50 million tonnes</label>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <span class="q-num">Question 06</span>
+      <p class="q-text">How many ocean dead zones — oxygen-depleted areas — exist worldwide?</p>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q6" value="a"><span class="option-radio"></span>Over 50</label>
+        <label class="option-label"><input type="radio" name="q6" value="b"><span class="option-radio"></span>Over 100</label>
+        <label class="option-label"><input type="radio" name="q6" value="c"><span class="option-radio"></span>Over 500</label>
+        <label class="option-label"><input type="radio" name="q6" value="d"><span class="option-radio"></span>Over 2,000</label>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <span class="q-num">Question 07</span>
+      <p class="q-text">By how much have average wildlife populations declined since 1970?</p>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q7" value="a"><span class="option-radio"></span>25%</label>
+        <label class="option-label"><input type="radio" name="q7" value="b"><span class="option-radio"></span>45%</label>
+        <label class="option-label"><input type="radio" name="q7" value="c"><span class="option-radio"></span>69%</label>
+        <label class="option-label"><input type="radio" name="q7" value="d"><span class="option-radio"></span>90%</label>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <span class="q-num">Question 08</span>
+      <p class="q-text">How many species are currently threatened with extinction?</p>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q8" value="a"><span class="option-radio"></span>100,000</label>
+        <label class="option-label"><input type="radio" name="q8" value="b"><span class="option-radio"></span>500,000</label>
+        <label class="option-label"><input type="radio" name="q8" value="c"><span class="option-radio"></span>1 million</label>
+        <label class="option-label"><input type="radio" name="q8" value="d"><span class="option-radio"></span>5 million</label>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <span class="q-num">Question 09</span>
+      <p class="q-text">Approximately how many people die prematurely each year due to air pollution?</p>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q9" value="a"><span class="option-radio"></span>1 million</label>
+        <label class="option-label"><input type="radio" name="q9" value="b"><span class="option-radio"></span>3 million</label>
+        <label class="option-label"><input type="radio" name="q9" value="c"><span class="option-radio"></span>7 million</label>
+        <label class="option-label"><input type="radio" name="q9" value="d"><span class="option-radio"></span>15 million</label>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <span class="q-num">Question 10</span>
+      <p class="q-text">What percentage of the world's population breathes air exceeding WHO safety guidelines?</p>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q10" value="a"><span class="option-radio"></span>50%</label>
+        <label class="option-label"><input type="radio" name="q10" value="b"><span class="option-radio"></span>75%</label>
+        <label class="option-label"><input type="radio" name="q10" value="c"><span class="option-radio"></span>90%</label>
+        <label class="option-label"><input type="radio" name="q10" value="d"><span class="option-radio"></span>99%</label>
+      </div>
+    </div>
+
+    <div class="quiz-finish-wrap">
+      <button type="button" class="finish-btn" onclick="finishQuiz()">Finish Quiz</button>
+    </div>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <h4>The Time to Act Is Now</h4>
+    <p>These crises are deeply interconnected — and so are the solutions. Every fraction of a degree matters. Every species saved matters. Every policy adopted matters. Small actions, multiplied by billions, can turn the tide.</p>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal">
+    <span class="modal-badge" id="modalBadge">🌍</span>
+    <h3 id="modalTitle">Quiz Complete!</h3>
+    <div class="score-display" id="scoreDisplay">0/10</div>
+    <div class="score-label">Your Score</div>
+    <p class="modal-msg" id="modalMsg"></p>
+    <button class="modal-close" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<script>
+  // Correct answers
+  const answers = { q1:'b', q2:'c', q3:'c', q4:'c', q5:'b', q6:'c', q7:'c', q8:'c', q9:'c', q10:'d' };
+
+  function switchTab(n) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + n).classList.add('active');
+    document.querySelector('[data-tab="' + n + '"]').classList.add('active');
+
+    const cards = document.querySelectorAll('#panel-' + n + ' .card');
+    cards.forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(18px)';
+      setTimeout(() => {
+        el.style.transition = `opacity .5s ease ${i * 0.09}s, transform .5s ease ${i * 0.09}s, border-color .2s, box-shadow .2s`;
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, 10);
+    });
+  }
+
+  function finishQuiz() {
+    let score = 0;
+
+    // Reveal answers
+    for (const [name, correct] of Object.entries(answers)) {
+      const options = document.querySelectorAll(`input[name="${name}"]`);
+      let userAnswer = null;
+      options.forEach(opt => { if (opt.checked) userAnswer = opt.value; });
+
+      options.forEach(opt => {
+        const label = opt.closest('.option-label');
+        if (opt.value === correct) {
+          label.classList.add('correct-reveal');
+        } else if (opt.value === userAnswer && userAnswer !== correct) {
+          label.classList.add('wrong-reveal');
+        }
+        // Disable further selection
+        opt.disabled = true;
+      });
+
+      if (userAnswer === correct) score++;
+    }
+
+    // Show modal
+    const msgs = [
+      { max:3, badge:'😔', title:'Keep Learning!',    msg:'Don\'t worry — now you know more than before! Re-read the topics and try again.' },
+      { max:5, badge:'🌱', title:'Good Start!',        msg:'You\'re getting there. A few more reads and you\'ll be an environmental expert!' },
+      { max:7, badge:'🌿', title:'Well Done!',         msg:'Solid knowledge! You\'re clearly paying attention to our planet\'s challenges.' },
+      { max:9, badge:'🌊', title:'Impressive!',        msg:'You really know your environmental issues. Our planet thanks you!' },
+      { max:10, badge:'🏆', title:'Perfect Score!',    msg:'Outstanding! You\'ve mastered all five crises. Share this knowledge with others!' },
+    ];
+
+    const result = msgs.find(m => score <= m.max) || msgs[msgs.length - 1];
+    document.getElementById('modalBadge').textContent = result.badge;
+    document.getElementById('modalTitle').textContent = result.title;
+    document.getElementById('scoreDisplay').textContent = score + '/10';
+    document.getElementById('modalMsg').textContent = result.msg;
+    document.getElementById('modalBackdrop').classList.add('show');
+
+    // Disable finish button
+    document.querySelector('.finish-btn').disabled = true;
+    document.querySelector('.finish-btn').style.opacity = '.5';
+    document.querySelector('.finish-btn').style.cursor = 'default';
+  }
+
+  function closeModal() {
+    document.getElementById('modalBackdrop').classList.remove('show');
+  }
+
+  // Close on backdrop click
+  document.getElementById('modalBackdrop').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  // Initial card animation
+  document.querySelectorAll('#panel-1 .card').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(18px)';
+    el.style.transition = `opacity .5s ease ${0.9 + i * 0.1}s, transform .5s ease ${0.9 + i * 0.1}s, border-color .2s, box-shadow .2s`;
+    setTimeout(() => {
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }, 900 + i * 100);
+  });
+</script>
+</body>
+</html>
